@@ -2,6 +2,7 @@ print("Predicciones")
 #PASO 1. IMPORTAR LAS LIBRERIAS
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 #paso 2. datos
 data="""Voto,Partido Preferido
@@ -177,6 +178,30 @@ dataLimpio=pd.read_csv(StringIO(data))
 #PASO 4. CONTAR LOS VOTOS
 conteoVotos=dataLimpio['Partido Preferido'].value_counts()
 print(conteoVotos)
+
+partidos=(
+    "MAS",
+    "ADN",
+    "UCS",
+    "Alianza Libre",
+    "Morena",
+    "PDC",
+    "APB-Sumate",
+    "Alianza Unidad",
+    "NGP"
+)
+
+#EXTRA PARA MEJORAR LA PREDICCION
+#SIMULACION DE 1000 VOTOS 
+simulacion=1000
+votosSimulados=100
+resultados={partido: 0 for partido in partidos}
+
+for _ in range(simulacion):
+    votosSimuladosNuevos=np.random.choice(partidos, size=votosSimulados)
+    conteoVotosSimulados=pd.Series(votosSimuladosNuevos).value_counts()
+    partidoGandorSimulacion=conteoVotosSimulados.idxmax()
+
 
 #PASO 6. PREDICCION CON LOS DATOS DEL DATAFRAME
 partidoGanador=conteoVotos.idxmax()
