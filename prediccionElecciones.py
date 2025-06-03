@@ -193,7 +193,7 @@ partidos=(
 
 #EXTRA PARA MEJORAR LA PREDICCION
 #SIMULACION DE 1000 VOTOS 
-simulacion=1000
+simulacion=100000
 votosSimulados=100
 resultados={partido: 0 for partido in partidos}
 
@@ -201,6 +201,28 @@ for _ in range(simulacion):
     votosSimuladosNuevos=np.random.choice(partidos, size=votosSimulados)
     conteoVotosSimulados=pd.Series(votosSimuladosNuevos).value_counts()
     partidoGandorSimulacion=conteoVotosSimulados.idxmax()
+    resultados[partidoGandorSimulacion]+=1
+
+#MOSTRAR LOS RESULTADOS DE LA SIMULACION
+resultados_Series=pd.Series(resultados)
+print("Resultados de la simulacion de predicciones a 1000 votos simulados")
+print(resultados_Series)
+
+#Graficar los resultados de la simulacion
+plt.figure(figsize=(8,5))
+resultados_Series.sort_values(ascending=False).plot(kind="bar",color="orange")
+plt.title("Simulacion de Votos - 1000 datos")
+plt.xlabel("Partido")
+plt.ylabel("% Votos")
+plt.grid(axis="y")
+plt.tight_layout()
+plt.show()
+
+
+
+
+
+
 
 
 #PASO 6. PREDICCION CON LOS DATOS DEL DATAFRAME
@@ -217,7 +239,7 @@ else:
 
 
 
-#PASO 5. GRAFICAR
+#PASO 5. GRAFICAR DE DATOS REALES
 plt.figure(figsize=(8,5))
 conteoVotos.plot(kind="bar", color="red")
 plt.title("Votos por partidos")
