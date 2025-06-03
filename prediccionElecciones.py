@@ -193,7 +193,7 @@ partidos=(
 
 #EXTRA PARA MEJORAR LA PREDICCION
 #SIMULACION DE 1000 VOTOS 
-simulacion=100000
+simulacion=5000
 votosSimulados=100
 resultados={partido: 0 for partido in partidos}
 
@@ -221,14 +221,21 @@ plt.show()
 
 
 
-
-
-
-
 #PASO 6. PREDICCION CON LOS DATOS DEL DATAFRAME
 partidoGanador=conteoVotos.idxmax()
 votosGanador=conteoVotos.max()
 porcentaje=(votosGanador/138)*100
+
+
+#prediccion de la simulacion
+votosGanadorSimulacion=conteoVotosSimulados.max()
+totalVotos=conteoVotosSimulados.sum()
+porcentajeSimulacion=(votosGanadorSimulacion/totalVotos)*100
+
+print("Prediccion del ganador: ",partidoGandorSimulacion, " - ",porcentajeSimulacion,"%")
+
+
+
 
 if porcentaje>=51:
     #prediccion
