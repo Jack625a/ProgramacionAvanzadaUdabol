@@ -11,9 +11,9 @@ from telegram import Update
 
 #PASO 2. CONFIGURAR LAS VARIABLES DE ENTORNO
 load_dotenv()
-telegramToken=os.getenv("apiTelegramBot")
-geminiApi=os.getenv("apiGemini")
-
+telegramToken="7722075493:AAENUxlfRsc0z_a7ST6NqEqZQWgmMHks0DQ"
+geminiApi="AIzaSyCiCnccEOQQZK_l8de7oeqcaVQBWQCnh-E"
+ 
 #PASO 3. CARGAR EL ENTRENAMIENTO 
 with open("entrenamiento.txt","r",encoding="utf-8") as archivo: entrenamiento=archivo.read()
 
@@ -41,6 +41,14 @@ async def obtenerMensajes(update:Update, context:ContextTypes.DEFAULT_TYPE):
         update.message.reply_text("Ocurrio un error al procesar su mensaje...")
 
 #PASO 7. CONFIGURAR LOS COMANDOS /start
-
 async def comandos(update:Update, context:ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Hola bievenido a UDABOT en que puedo ayudarte!")
+
+#PASO 8. INICIAR EL BOT
+if __name__=="__main__":
+    app=ApplicationBuilder().token(telegramToken).build()
+    #congigurar el comando
+    app.add_handler(CommandHandler("start",comandos))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, obtenerMensajes))
+    print("Bot iniciado...-")
+    app.run_polling()
